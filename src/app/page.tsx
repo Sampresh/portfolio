@@ -58,7 +58,7 @@ export default function Home() {
           onClick={() => setIsModalOpen(true)}
         >
           <Image
-            src="/images/myphoto.jpg"
+            src="/portfolio/images/myphoto.jpg"
             alt="Sampresh Karki"
             fill
             className="object-cover"
@@ -98,7 +98,7 @@ export default function Home() {
             </button>
             <div className="relative w-full h-[80vh]">
               <Image
-                src="/images/myphoto.jpg"
+                src="/portfolio/images/myphoto.jpg"
                 alt="Sampresh Karki"
                 fill
                 className="object-contain"

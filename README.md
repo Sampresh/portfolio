@@ -1,67 +1,62 @@
-# Portfolio Website
+# Sampresh Karki - Personal Portfolio
 
-A modern, responsive portfolio website built with Next.js 15 and Tailwind CSS.
+A modern, responsive personal portfolio website built with Next.js and Tailwind CSS. This website showcases my professional experience, projects, and skills.
 
 ## Features
 
-- Responsive design that works on all devices
-- Modern UI with smooth animations
-- Four main pages: Home, Projects, Blogs, and Contact
-- Skills showcase
-- Project showcase with detailed information
-- Blog section
-- Contact form
-- Social media integration
+- 🎨 Modern and clean design
+- 📱 Fully responsive layout
+- 💻 Interactive project showcase
+- 📝 Blog section
+- 📄 Downloadable CV
+- 🖼️ Modal image viewer
+- 📬 Contact form
+- 🌙 Skills showcase
 
-## Getting Started
+## Tech Stack
 
-1. Install dependencies:
-```bash
-npm install
-```
+- **Framework:** Next.js 14
+- **Styling:** Tailwind CSS
+- **Icons:** Heroicons
+- **Deployment:** GitHub Pages
 
-2. Run the development server:
-```bash
-npm run dev
-```
+## Local Development
 
-3. Open [http://localhost:3000](http://localhost:3000) in your browser.
+To run this project locally, follow these steps:
 
-## Customization
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Sampresh/portfolio.git
+   ```
 
-### Profile Information
-Edit the following files to customize your profile:
-- `src/app/page.tsx` - Home page content
-- `src/app/projects/page.tsx` - Projects list
-- `src/app/blogs/page.tsx` - Blog posts
-- `src/app/contact/page.tsx` - Contact information
+2. Navigate to the project directory:
+   ```bash
+   cd portfolio
+   ```
 
-### Styling
-The website uses Tailwind CSS for styling. You can customize the theme by editing:
-- `tailwind.config.js` - Theme configuration
-- `src/styles/globals.css` - Global styles and custom components
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-### Images
-Replace the following images in the `public/images` directory:
-- `profile.jpg` - Your profile picture
-- Add project and blog images as needed
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-## Deployment
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
 
-The website can be deployed to any platform that supports Next.js, such as:
-- Vercel
-- Netlify
-- AWS Amplify
+## Project Structure
 
-## Technologies Used
+- `/src/app` - Main application pages
+- `/public` - Static assets (images, CV)
+- `/components` - Reusable UI components
+- `/styles` - Global styles and Tailwind configuration
 
-- Next.js 15
-- React
-- TypeScript
-- Tailwind CSS
-- HTML5
-- CSS3
+## Contact
 
-## License
-
-MIT 
+- Email: sampresh.karki@gmail.com
+- LinkedIn: [Sampresh Karki](https://www.linkedin.com/in/sampresh-karki-a86409256/)
+- GitHub: [@Sampresh](https://github.com/Sampresh)
+- YouTube: [@sampres10](https://www.youtube.com/@sampres10)
+- Instagram: [@sampres10](https://www.instagram.com/sampres10/) 

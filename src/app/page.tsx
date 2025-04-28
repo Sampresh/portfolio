@@ -58,9 +58,10 @@ export default function Home() {
           onClick={() => setIsModalOpen(true)}
         >
           <Image
-            src="/portfolio/images/myphoto.jpg"
+            src="./images/myphoto.jpg"
             alt="Sampresh Karki"
-            fill
+            width={240}
+            height={240}
             className="object-cover"
             priority
           />
@@ -98,7 +99,7 @@ export default function Home() {
             </button>
             <div className="relative w-full h-[80vh]">
               <Image
-                src="/portfolio/images/myphoto.jpg"
+                src="./images/myphoto.jpg"
                 alt="Sampresh Karki"
                 fill
                 className="object-contain"

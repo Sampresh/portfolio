@@ -1,22 +1,44 @@
 'use client';
 
-import { useTheme } from '../context/ThemeContext';
-import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
+// Import required dependencies
+import { useTheme } from '@/context/ThemeContext';  // Theme context hook
+import { Moon, Sun } from 'lucide-react';          // Icons for theme toggle
+import { memo } from 'react';                      // React memo for performance
 
-export default function ThemeToggle() {
+/**
+ * ThemeToggle Component
+ * A button component that toggles between light and dark themes
+ * Uses memo to prevent unnecessary re-renders
+ * 
+ * Features:
+ * - Shows sun icon in dark mode
+ * - Shows moon icon in light mode
+ * - Changes background color based on theme
+ * - Smooth transition effects
+ */
+const ThemeToggle = memo(() => {
+  // Get theme state and toggle function from context
   const { theme, toggleTheme } = useTheme();
 
   return (
     <button
-      onClick={toggleTheme}
-      className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-      aria-label="Toggle theme"
+      onClick={toggleTheme}  // Call toggleTheme when clicked
+      className="relative z-40 p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors duration-200"
+      aria-label="Toggle theme"  // Accessibility label
     >
+      {/* Conditional rendering of theme icons */}
       {theme === 'dark' ? (
-        <SunIcon className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        // Sun icon for dark mode (click to switch to light)
+        <Sun className="w-5 h-5 text-yellow-500" />
       ) : (
-        <MoonIcon className="w-5 h-5 text-gray-800 dark:text-gray-200" />
+        // Moon icon for light mode (click to switch to dark)
+        <Moon className="w-5 h-5 text-gray-700" />
       )}
     </button>
   );
-} 
+});
+
+// Set display name for debugging purposes
+ThemeToggle.displayName = 'ThemeToggle';
+
+export default ThemeToggle; 

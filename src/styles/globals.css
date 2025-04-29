@@ -8,6 +8,8 @@
   --background-end-rgb: 255, 255, 255;
   --text-primary: 17, 24, 39;
   --text-secondary: 75, 85, 99;
+  --gradient-start: #0070f3;
+  --gradient-end: #00c6ff;
 }
 
 .dark {
@@ -16,36 +18,41 @@
   --background-end-rgb: 31, 41, 55;
   --text-primary: 229, 231, 235;
   --text-secondary: 156, 163, 175;
+  --gradient-start: #00c6ff;
+  --gradient-end: #0070f3;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
+@layer base {
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
 
-@layer base {
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight text-[rgb(var(--text-primary))];
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
   
   h1 {
-    @apply text-4xl md:text-5xl;
+    @apply text-4xl md:text-5xl lg:text-6xl;
   }
   
   h2 {
-    @apply text-3xl md:text-4xl;
+    @apply text-3xl md:text-4xl lg:text-5xl;
   }
   
   h3 {
-    @apply text-2xl md:text-3xl;
+    @apply text-2xl md:text-3xl lg:text-4xl;
   }
   
   p {
@@ -55,26 +62,130 @@ body {
 
 @layer components {
   .btn {
-    @apply px-4 py-2 rounded-md font-medium transition-colors duration-200;
+    @apply px-4 py-2 rounded-md font-medium transition-all duration-300;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    color: white;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
   }
   
-  .btn-primary {
-    @apply bg-primary text-white hover:bg-primary/90;
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, var(--gradient-end), var(--gradient-start));
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 0.3s ease;
+  }
+  
+  .btn:hover::before {
+    opacity: 1;
   }
   
   .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-200;
+    @apply bg-white dark:bg-gray-800 rounded-lg p-6 transition-all duration-300;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(0, 198, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+  }
+
+  .card:hover::before {
+    transform: translateX(100%);
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
   }
 
   .nav-link {
-    @apply text-[rgb(var(--text-primary))] inline-flex items-center px-1 pt-1 border-b-2 border-transparent hover:border-primary transition-colors duration-200;
+    @apply text-[rgb(var(--text-primary))] inline-flex items-center px-1 pt-1 border-b-2 border-transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    transform: translateX(0);
   }
 
   .skill-tag {
     @apply px-4 py-2 bg-gray-100 dark:bg-gray-700 text-[rgb(var(--text-primary))] rounded-full text-sm font-medium;
+    background: linear-gradient(to right, rgba(0, 112, 243, 0.1), rgba(0, 198, 255, 0.1));
+    transition: all 0.3s ease;
+  }
+
+  .skill-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .description-text {
     @apply text-[rgb(var(--text-secondary))] leading-relaxed;
+  }
+
+  /* Glassmorphism effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Neon glow effect */
+  .neon {
+    text-shadow: 0 0 5px var(--gradient-start),
+                 0 0 10px var(--gradient-start),
+                 0 0 20px var(--gradient-start);
+  }
+
+  /* Floating animation */
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .float {
+    animation: float 3s ease-in-out infinite;
   }
 } 

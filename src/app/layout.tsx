@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Link from "next/link";
 import { ThemeProvider } from "../context/ThemeContext";
 import ThemeToggle from "../components/ThemeToggle";
+import MobileNav from "../components/MobileNav";
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -49,7 +50,8 @@ export default function RootLayout({
                     </Link>
                   </div>
                 </div>
-                <div className="flex items-center">
+                <div className="flex items-center space-x-4">
+                  <MobileNav />
                   <ThemeToggle />
                 </div>
               </div>

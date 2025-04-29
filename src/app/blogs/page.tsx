@@ -1,67 +1,73 @@
+"use client";
+
+import Image from "next/image";
 import Link from "next/link";
 
-const blogs = [
-  {
-    id: 1,
-    title: "Getting Started with Next.js",
-    description:
-      "A comprehensive guide to understanding Next.js fundamentals and building your first application.",
-    date: "March 15, 2024",
-    readTime: "5 min read",
-    category: "Web Development",
-    link: "/blogs/nextjs-intro",
-  },
-  {
-    id: 2,
-    title: "Modern Web Development",
-    description:
-      "Exploring the latest trends and best practices in modern web development.",
-    date: "March 10, 2024",
-    readTime: "8 min read",
-    category: "Technology",
-    link: "/blogs/modern-web",
-  },
-  {
-    id: 3,
-    title: "Building Responsive UIs",
-    description:
-      "Learn how to create beautiful and responsive user interfaces that work across all devices.",
-    date: "March 5, 2024",
-    readTime: "6 min read",
-    category: "UI/UX",
-    link: "/blogs/responsive-ui",
-  },
-];
-
 export default function Blogs() {
+  const blogs = [
+    {
+      id: 1,
+      title: "Getting Started with Next.js",
+      description: "A comprehensive guide to Next.js, covering its core features, routing system, and best practices for building modern web applications.",
+      image: "/images/blogs/nextjs.jpg",
+      link: "/blogs/nextjs-intro",
+      date: "March 15, 2024"
+    },
+    {
+      id: 2,
+      title: "Modern Web Development",
+      description: "Exploring the latest trends in web development, including serverless architecture, microservices, and progressive web apps.",
+      image: "/images/blogs/web-dev.jpg",
+      link: "/blogs/modern-web",
+      date: "March 10, 2024"
+    },
+    {
+      id: 3,
+      title: "Building Scalable APIs",
+      description: "Learn how to design and implement RESTful APIs that can handle millions of requests while maintaining performance and security.",
+      image: "/images/blogs/api-design.jpg",
+      link: "/blogs/scalable-apis",
+      date: "March 5, 2024"
+    },
+    {
+      id: 4,
+      title: "State Management in React",
+      description: "A deep dive into different state management solutions in React, comparing Redux, Context API, and newer alternatives like Zustand.",
+      image: "/images/blogs/state-management.jpg",
+      link: "/blogs/react-state",
+      date: "March 1, 2024"
+    }
+  ];
+
   return (
     <div className="space-y-8">
-      <h1 className="text-4xl font-bold">Blog Posts</h1>
-      <p className="text-lg text-gray-600">
-        Explore my thoughts and insights on web development, technology, and more.
-      </p>
+      <div className="flex justify-between items-center">
+        <h1 className="text-4xl font-bold">Blogs</h1>
+        <Link href="/" className="text-primary hover:text-primary/90 transition-colors duration-200">
+          Back to Home
+        </Link>
+      </div>
 
-      <div className="space-y-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {blogs.map((blog) => (
           <Link
             key={blog.id}
             href={blog.link}
-            className="block card group hover:shadow-xl transition-all duration-300"
+            className="card hover:scale-105 transition-transform duration-200 overflow-hidden"
           >
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="md:w-1/3">
-                <div className="aspect-video relative rounded-lg overflow-hidden bg-gray-200" />
-              </div>
-              <div className="md:w-2/3">
-                <div className="flex items-center gap-4 mb-2">
-                  <span className="text-sm text-primary">{blog.category}</span>
-                  <span className="text-sm text-gray-500">{blog.date}</span>
-                  <span className="text-sm text-gray-500">{blog.readTime}</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
-                  {blog.title}
-                </h3>
-                <p className="text-gray-600">{blog.description}</p>
+            <div className="relative h-48 w-full">
+              <Image
+                src={blog.image}
+                alt={blog.title}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
+              <p className="description-text mb-4">{blog.description}</p>
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                {blog.date}
               </div>
             </div>
           </Link>

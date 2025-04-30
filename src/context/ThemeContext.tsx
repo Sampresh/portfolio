@@ -30,41 +30,31 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
  * @param children - React nodes that will have access to the theme context
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize theme state with 'dark' as default
-  const [theme, setTheme] = useState<Theme>('dark');
+  // Initialize theme state with saved theme or default to 'dark'
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as Theme | null;
+      return savedTheme || 'dark';
+    }
+    return 'dark';
+  });
 
   /**
-   * Effect to load saved theme preference from localStorage
-   * Runs only once when component mounts
+   * Effect to sync theme with document class
+   * Runs when theme changes
    */
   useEffect(() => {
-    // Get saved theme from localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
-    
-    // If there's a saved theme and it's different from current theme
-    if (savedTheme && savedTheme !== theme) {
-      setTheme(savedTheme);
-      // Toggle dark class on document root based on saved theme
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-    }
-  }, []);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
 
   /**
    * Function to toggle between light and dark themes
    * Updates state, localStorage, and document class
    */
   const toggleTheme = () => {
-    // Determine new theme based on current theme
     const newTheme = theme === 'light' ? 'dark' : 'light';
-    
-    // Update theme state
     setTheme(newTheme);
-    
-    // Save theme preference to localStorage
     localStorage.setItem('theme', newTheme);
-    
-    // Toggle dark class on document root
-    document.documentElement.classList.toggle('dark');
   };
 
   // Provide theme context to all children

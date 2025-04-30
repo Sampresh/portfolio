@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../styles/globals.css";
 import Link from "next/link";
-import { ThemeProvider } from "../context/ThemeContext";
 import ThemeToggle from "../components/ThemeToggle";
 import MobileNav from "../components/MobileNav";
+import Providers from "../components/Providers";
 
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
@@ -23,9 +23,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${poppins.className} dark`}>
+    <html lang="en" className={poppins.className}>
       <body className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-        <ThemeProvider>
+        <Providers>
           <nav className="glass sticky top-0 z-50">
             <div className="w-full px-3 sm:px-5 md:px-7 lg:px-10">
               <div className="flex justify-between items-center h-16">
@@ -78,7 +78,7 @@ export default function RootLayout({
               </p>
             </div>
           </footer>
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

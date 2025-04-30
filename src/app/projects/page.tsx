@@ -2,42 +2,56 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+
+interface Project {
+  _id: string;
+  title: string;
+  description: string;
+  image: string;
+  link: string;
+  tags: string[];
+}
 
 export default function Projects() {
-  const projects = [
-    {
-      id: 1,
-      title: "E-commerce Platform",
-      description: "A full-stack e-commerce solution with modern features including product catalog, shopping cart, user authentication, and payment integration.",
-      image: "/images/projects/ecommerce.jpg",
-      link: "/projects/ecommerce",
-      tags: ["React", "Node.js", "MongoDB", "Stripe"]
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description: "A productivity app for managing daily tasks with features like task categorization, priority setting, and progress tracking.",
-      image: "/images/projects/task-manager.jpg",
-      link: "/projects/task-manager",
-      tags: ["Next.js", "TypeScript", "Firebase"]
-    },
-    {
-      id: 3,
-      title: "Social Media Dashboard",
-      description: "A comprehensive analytics dashboard for social media platforms, featuring real-time metrics, content scheduling, and engagement tracking.",
-      image: "/images/projects/social-dashboard.jpg",
-      link: "/projects/social-dashboard",
-      tags: ["React", "Python", "PostgreSQL", "Chart.js"]
-    },
-    {
-      id: 4,
-      title: "Fitness Tracker App",
-      description: "A mobile-first fitness application that helps users track workouts, set goals, and monitor progress with detailed analytics and personalized recommendations.",
-      image: "/images/projects/fitness-tracker.jpg",
-      link: "/projects/fitness-tracker",
-      tags: ["React Native", "Firebase", "Redux", "Expo"]
-    }
-  ];
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('/api/projects');
+        if (!response.ok) {
+          throw new Error('Failed to fetch projects');
+        }
+        const data = await response.json();
+        setProjects(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="text-red-500">{error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -51,7 +65,7 @@ export default function Projects() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {projects.map((project) => (
           <Link
-            key={project.id}
+            key={project._id}
             href={project.link}
             className="card hover:scale-105 transition-transform duration-200 overflow-hidden"
           >

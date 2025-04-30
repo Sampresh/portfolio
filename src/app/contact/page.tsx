@@ -1,9 +1,43 @@
+'use client';
+
+import { useState } from 'react';
+
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('submitting');
+
+    try {
+      // Here you would typically send the form data to your API
+      // For now, we'll just simulate a successful submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-600 dark:text-gray-400">
           Have a question or want to work together? Feel free to reach out!
         </p>
       </div>
@@ -12,11 +46,21 @@ export default function Contact() {
         {/* Contact Form */}
         <div className="card">
           <h2 className="text-2xl font-semibold mb-6">Send me a message</h2>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {status === 'success' && (
+              <div className="p-4 bg-green-100 text-green-700 rounded-md">
+                Message sent successfully!
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="p-4 bg-red-100 text-red-700 rounded-md">
+                Failed to send message. Please try again.
+              </div>
+            )}
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Name
               </label>
@@ -24,14 +68,16 @@ export default function Contact() {
                 type="text"
                 id="name"
                 name="name"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white"
                 required
               />
             </div>
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Email
               </label>
@@ -39,30 +85,35 @@ export default function Contact() {
                 type="email"
                 id="email"
                 name="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white"
                 required
               />
             </div>
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
               >
                 Message
               </label>
               <textarea
                 id="message"
                 name="message"
+                value={formData.message}
+                onChange={handleChange}
                 rows={4}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary dark:bg-gray-800 dark:text-white"
                 required
               ></textarea>
             </div>
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              disabled={status === 'submitting'}
+              className="w-full px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors duration-200 disabled:opacity-50"
             >
-              Send Message
+              {status === 'submitting' ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>
@@ -72,7 +123,6 @@ export default function Contact() {
           <div className="card">
             <h2 className="text-2xl font-semibold mb-4">Contact Information</h2>
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Contact Information</h3>
               <div className="space-y-2">
                 <p className="flex items-center gap-2">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -111,28 +161,28 @@ export default function Contact() {
             <h2 className="text-2xl font-semibold mb-4">Connect with me</h2>
             <div className="flex space-x-4">
               <a
-                href="https://github.com"
+                href="https://github.com/Sampresh"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors duration-200"
+                className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-200"
               >
                 GitHub
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/sampresh-karki-a86409256/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors duration-200"
+                className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-200"
               >
                 LinkedIn
               </a>
               <a
-                href="https://twitter.com"
+                href="https://www.youtube.com/@sampres10"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-primary transition-colors duration-200"
+                className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors duration-200"
               >
-                Twitter
+                YouTube
               </a>
             </div>
           </div>
